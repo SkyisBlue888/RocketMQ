@@ -12,7 +12,7 @@
 - 每个Cluster包含3组Broker
 - 每组Broker包含1主1从共2个Broker节点
 
-![2个独立的RocketMQ Cluster](../RocketMQClusters.drawio.png)
+![2个独立的RocketMQ Cluster](../images/RocketMQClusters.drawio.png)
 
 关键元数据的含义：
 - brokerAddr：Broker节点的ip地址，在网络层面区分不同Broker节点的连接地址。
