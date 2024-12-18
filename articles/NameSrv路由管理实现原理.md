@@ -35,54 +35,54 @@ NameSrv RouteInfoManager中总共使用了以下字段存储路由信息：
 保存每个Broker分组地址信息的键值对，键为BrokerName，值为BrokerData，以上图中的2个集群为例，json格式如下：
 ```json
 {
-    "broker-0": {
-        "cluster": "cluster-0",
-        "brokerName": "broker-0",
-        "brokerAddrs": {
-            "0": "192.168.41.84:10101",
-            "1": "192.168.41.87:10101"
-        }
-    },
-    "broker-1": {
-        "cluster": "cluster-0",
-        "brokerName": "broker-1",
-        "brokerAddrs": {
-            "0": "192.168.41.85:10101",
-            "1": "192.168.41.88:10101"
-        }
-    },
-    "broker-2": {
-        "cluster": "cluster-0",
-        "brokerName": "broker-2",
-        "brokerAddrs": {
-            "0": "192.168.41.86:10101",
-            "1": "192.168.41.89:10101"
-        }
-    },
-    "broker-3": {
-        "cluster": "cluster-1",
-        "brokerName": "broker-3",
-        "brokerAddrs": {
-            "0": "192.168.41.74:10101",
-            "1": "192.168.41.77:10101"
-        }
-    },
-    "broker-4": {
-        "cluster": "cluster-1",
-        "brokerName": "broker-4",
-        "brokerAddrs": {
-            "0": "192.168.41.75:10101",
-            "1": "192.168.41.78:10101"
-        }
-    },
-    "broker-5": {
-        "cluster": "cluster-1",
-        "brokerName": "broker-5",
-        "brokerAddrs": {
-            "0": "192.168.41.76:10101",
-            "1": "192.168.41.79:10101"
-        }
-    }
+    "broker-0": {
+        "cluster": "cluster-0",
+        "brokerName": "broker-0",
+        "brokerAddrs": {
+            "0": "192.168.41.84:10101",
+            "1": "192.168.41.87:10101"
+        }
+    },
+    "broker-1": {
+        "cluster": "cluster-0",
+        "brokerName": "broker-1",
+        "brokerAddrs": {
+            "0": "192.168.41.85:10101",
+            "1": "192.168.41.88:10101"
+        }
+    },
+    "broker-2": {
+        "cluster": "cluster-0",
+        "brokerName": "broker-2",
+        "brokerAddrs": {
+            "0": "192.168.41.86:10101",
+            "1": "192.168.41.89:10101"
+        }
+    },
+    "broker-3": {
+        "cluster": "cluster-1",
+        "brokerName": "broker-3",
+        "brokerAddrs": {
+            "0": "192.168.41.74:10101",
+            "1": "192.168.41.77:10101"
+        }
+    },
+    "broker-4": {
+        "cluster": "cluster-1",
+        "brokerName": "broker-4",
+        "brokerAddrs": {
+            "0": "192.168.41.75:10101",
+            "1": "192.168.41.78:10101"
+        }
+    },
+    "broker-5": {
+        "cluster": "cluster-1",
+        "brokerName": "broker-5",
+        "brokerAddrs": {
+            "0": "192.168.41.76:10101",
+            "1": "192.168.41.79:10101"
+        }
+    }
 }
 ```
 
@@ -90,24 +90,23 @@ NameSrv RouteInfoManager中总共使用了以下字段存储路由信息：
 保存每个Broker节点的心跳存活信息的键值对，以上图中Cluster-0/Broker-0/master为例，键为BrokerAddrInfo，json格式如下：
 ```json
 {
-    "clusterName": "cluster-0",
-    "brokerAddr": "192.168.41.84"
+    "clusterName": "cluster-0",
+    "brokerAddr": "192.168.41.84"
 }
-
-
+```
 
 值为BrokerLiveInfo，json格式如下：
-
+```json
 {
-    "channel": null,
-    "dataVersion": {
-        "counter": 1,
-        "stateVersion": 0,
-        "timestamp": 1710387063790
-    },
-    "haServerAddr": "192.168.41.84:10102",
-    "heartbeatTimeoutMillis": 120000,
-    "lastUpdateTimestamp": 1710387065225
+    "channel": null,
+    "dataVersion": {
+        "counter": 1,
+        "stateVersion": 0,
+        "timestamp": 1710387063790
+    },
+    "haServerAddr": "192.168.41.84:10102",
+    "heartbeatTimeoutMillis": 120000,
+    "lastUpdateTimestamp": 1710387065225
 }
 ```
 
@@ -115,16 +114,16 @@ NameSrv RouteInfoManager中总共使用了以下字段存储路由信息：
 保存每个集群下的Broker分组信息，，键为以上图中2个集群为例，json格式如下：
 ```json
 {
-    "cluster-0": [
-        "broker-0",
-        "broker-1",
-        "broker-2"
-    ],
-    "cluster-1": [
-        "broker-3",
-        "broker-4",
-        "broker-5"
-    ]
+    "cluster-0": [
+        "broker-0",
+        "broker-1",
+        "broker-2"
+    ],
+    "cluster-1": [
+        "broker-3",
+        "broker-4",
+        "broker-5"
+    ]
 }
 ```
 
@@ -132,15 +131,15 @@ NameSrv RouteInfoManager中总共使用了以下字段存储路由信息：
 保存每个Topic在每个Broker分组上的队列的总览信息，键为Topic名称，值为BrokerName与QueueData间的映射Map，以上图中的topic-1为例，json格式如下：
 ```json
 {
-    "topic-1": {
-        "broker-0": {
-            "brokerName": "broker-0",
-            "readQueueNums": 1,
-            "writeQueueNums": 1,
-            "perm": 6,  /*2禁写，4禁读，6读写放开*/
-            "topicSysFlag": 0 /*主题系统标签，默认为0*/
-        }
-    }
+    "topic-1": {
+        "broker-0": {
+            "brokerName": "broker-0",
+            "readQueueNums": 1,
+            "writeQueueNums": 1,
+            "perm": 6,
+            "topicSysFlag": 0
+        }
+    }
 }
 ```
 
@@ -160,3 +159,7 @@ NameSrv RouteInfoManager中总共使用了以下字段存储路由信息：
 - 如果请求注册的Broker是备节点，响应返回体中填充主节点地址信息
 - 如果此次注册观察到主备倒换，namesrv将主动通知broker倒换事件
 - 释放全局写锁
+
+  #### BrokerHeartBeat
+  每个Broker节点默认每1s向每个NameSrv节点发送HeartBeat请求。
+  每个NameSrv节点默认每5s检查并UnRegister心跳超时（默认10s）的Broker，仅限本NameSrv节点并不会传播。
