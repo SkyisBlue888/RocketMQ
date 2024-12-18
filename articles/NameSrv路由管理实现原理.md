@@ -160,6 +160,7 @@ NameSrv RouteInfoManager中总共使用了以下字段存储路由信息：
 - 如果此次注册观察到主备倒换，namesrv将主动通知broker倒换事件
 - 释放全局写锁
 
-  #### BrokerHeartBeat
-  每个Broker节点默认每1s向每个NameSrv节点发送HeartBeat请求。
-  每个NameSrv节点默认每5s检查并UnRegister心跳超时（默认10s）的Broker，仅限本NameSrv节点并不会传播。
+#### BrokerHeartBeat
+每个Broker节点默认每1s向每个NameSrv节点发送HeartBeat请求。
+
+每个NameSrv节点默认每5s检查并UnRegister心跳超时（默认10s）的Broker，仅限本NameSrv节点并不会传播。
