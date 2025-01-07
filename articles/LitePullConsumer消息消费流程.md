@@ -6,11 +6,11 @@
 
 #### 相关类继承体系
 
-![LitePullConsumer类关系.drawio](C:\Users\c00567567\Desktop\LitePullConsumer类关系.drawio.png)
+![LitePullConsumer类关系.drawio](../images/LitePullConsumer类关系.drawio.png)
 
 #### MessageQueue继承体系
 
-![MessageQueue继承体系.drawio](C:\Users\c00567567\Desktop\MessageQueue继承体系.drawio.png)
+![MessageQueue继承体系.drawio](../images/MessageQueue继承体系.drawio.png)
 
 #### 消费者启动
 
