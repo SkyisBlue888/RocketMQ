@@ -4,15 +4,15 @@
 
 # Client
 
-#### 相关类继承体系
+## 相关类继承体系
 
 ![LitePullConsumer类关系.drawio](../images/LitePullConsumer类关系.drawio.png)
 
-#### MessageQueue继承体系
+## MessageQueue继承体系
 
 ![MessageQueue继承体系.drawio](../images/MessageQueue继承体系.drawio.png)
 
-#### 消费者启动
+## 消费者启动
 
 DefaultLitePullConsumer.start：
 
@@ -40,11 +40,11 @@ DefaultLitePullConsumer.start：
 
 
 
-#### ASSIGN
+## ASSIGN
 
 ASSIGN模式下多个消费者之间不会自动重平衡，需要客户端主动分配指定队列，自行维护订阅关系。
 
-##### Poll
+#### Poll
 
 Consumer poll方法不会直接从Broker拉取消息，而是从本地缓存中拉取，缓存中的消息由另外的线程定时从Broker拉取。
 
@@ -54,7 +54,7 @@ Consumer poll方法不会直接从Broker拉取消息，而是从本地缓存中�
     - DefaultLitePullConsumerImpl.checkServiceState：检查Consumer服务状态是否为RUNNING。
     - BlockingQueue<ConsumeRequest> consumeRequestCache.poll：从已拉取并缓存在本地的Cache中拉取待消费消息。
 
-##### Pull
+#### Pull
 
 真正拉取消息的动作由PullTaskImpl.run触发，每个队列对应一个PullTaskImpl对象，所有PullTaskImpl交由定时线程池执行：
 
@@ -75,11 +75,11 @@ Consumer poll方法不会直接从Broker拉取消息，而是从本地缓存中�
 - DefaultLitePullConsumerImpl.submitConsumeRequest：向ConsumeRequestCache新增ConsumeRequest。
 - DefaultLitePullConsumerImpl.updatePullOffset：更新下次开始拉取的offset。
 
-#### SUBSCRIBE
+## SUBSCRIBE
 
 SUBSCRIBE模式下多个消费者间会自动重平衡，订阅关系由RebalanceService维护。
 
-##### Rebalance
+#### Rebalance
 
 - RebalanceService.run：
 - MQClientInstance.doRebalance：
@@ -94,6 +94,6 @@ SUBSCRIBE模式下多个消费者间会自动重平衡，订阅关系由Rebalanc
       - AllocateMessageQueueStrategy.allocate：根据指定策略算法，重新分配队列。
       - RebalanceImpl.updateProcessQueueTableInRebalance：根据重平衡结果，ProcessQueueTable新增新队列，移除不再关注的队列。
 
-##### Pull
+#### Pull
 
 与ASSIGN模式下Pull相同，由PullTaskImpl.run触发，将消息拉取到ProcessQueue的cache中，由Consumer poll最终拉取。
