@@ -34,20 +34,27 @@ DefaultPushConsumer.start：
 
 ###  Rebalance
 
- Push消费首先由RebalanceService定时触发：
+Push消费首先由RebalanceService定时触发，单进程内多个消费者共用同一个RebalanceService；默认20s触发一次，如果重平衡失败将在1s后立即重新触发：
 
 - RebalanceService.run：
-  - MQClientInstance.doRebalance：
-    - DefaultPushConsumerImpl.tryRebalance：
-    - RebalancePushImpl.doRebalance：
-    - RebalanceImpl.rebalanceByTopic：
-      - AllocateMessageQueueStrategy.allocate：按消费组统一队列分配策略，确定当前消费者所分配的队列。
-      - RebalanceImpl.updateProcessQueueTableInRebalance：
-        - RebalanceImpl.removeUnnecessaryMessageQueue：移除不再分配给此消费者的队列。
-        - RebalancePushImpl.createProcessQueue：如分配了新队列，创建ProcessQueue。
-        - RebalancePushImpl.computePullFromWhere：计算下次拉取Offset。
-        - RebalancePushImpl.dispatchPullRequest：分发处理pullRequest。
-          - PullMessageService.executePullRequestImmediately：将pullRequest加入messageRequestQueue，待PullMessageService线程无限循环拉取处理。
+  - MQClientInstance.doRebalance：遍历当前进程下的所有消费者。
+    - DefaultMQPushConsumerImpl.tryRebalance：尝试重平衡，如失败返回false并重试。
+      - RebalanceImpl.doRebalance：遍历目标消费者关联的所有订阅关系。
+        - RebalanceImpl.rebalanceByTopic：按订阅关系/Topic开始重平衡。
+          - 根据消费类型重新分配队列：
+            - BROADCASTING：
+              - 直接查找目标订阅关系/Topic下的所有队列作为目标消费者重新分配的队列。
+            - CLUSTERING：
+              - 查找目标订阅关系/Topic下的所有队列。
+              - 查找目标消费者所属消费组下的所有消费者ID。
+              - AllocateMessageQueueStrategy.allocate：按目标消费者所指定的策略重新分配队列。
+          - RebalanceImpl.updateProcessQueueTableInRebalance：遍历重新分配队列更新ProcessQueue。
+            - RebalanceImpl.removeUnnecessaryMessageQueue：移除不再分配给目标消费者的队列。
+            - RebalancePushImpl.createProcessQueue：如给目标消费者分配了新队列，创建ProcessQueue。
+            - RebalancePushImpl.computePullFromWhere：计算目标消费者从目标队列下次开始拉取的Offset。
+            - RebalancePushImpl.dispatchPullRequest：为目标ProcessQueue创建pullRequest并分发处理。
+              - PullMessageService.executePullRequestImmediately：立即将pullRequest加入messageRequestQueue，待PullMessageService线程无限循环拉取处理。
+          - RebalanceImpl.messageQueueChanged：如重平衡后所分配队列发生变化，触发监听回调函数。
 
 ###  Execute Pull request
 
