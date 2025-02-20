@@ -59,11 +59,15 @@ Basic
   - pop consume server
   - pop consume 4.x client
   - pop consume 5.x client
-  - pop consume orderly
 - Grpc:
   - grpc protocol
   - grpc client
   - grpc server
+- Advanced Msg:
+  - tracing msg
+  - scheduled msg
+  - transaction msg
+  - fifo msg
 - Store:
   - tiered storage
 - Acl:
